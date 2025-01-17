@@ -28,39 +28,50 @@ function vectnorm(xx, yy)
     }
 end
 
+function keycheck(xx, yy) --trying to fix the input delay ffs 
+    
+    if love.keyboard.isDown("w") then
+        xx = 1
+    end
+    if love.keyboard.isDown("s") then
+        xx = -1
+    end
+    if love.keyboard.isDown("a") then
+        yy = -1
+    end
+    if love.keyboard.isDown("d") then
+        yy = 1
+    end
+    return vectnorm(xx,yy)
+end
+
+function capthing(vect)
+    if true then
+        
+    end
+end
+
 function love.load()
-    position = {
-        x = 100,
-        y = 50
+    platformdim = {
+    width = love.graphics.getWidth(),
+    height = love.graphics.getHeight()
     }
+    position = {
+        x = platformdim.width / 2,
+        y = platformdim.height / 2
+    }
+    x = 0
+    y = 0
     ent.init()
     
     --ent.echo(position.x .. (",") .. position.y)
 end
 function love.draw()
-    love.graphics.rectangle("line", position.x, position.y, 200, 150)
+    love.graphics.rectangle("line", position.x, position.y, 100, 100)
 end
 function love.update(dt)
-    if direction.x > 0 then
-        direction.x = 1
-        move(true, false, 1 * 50, dt)
-    end
-
-    if direction.x < 0 then
-        direction.x = -1
-        move(true, false, -1 * 50, dt)
-    end
-
-    if direction.y > 0 then
-        direction.y = 1
-        move(false, true, 1 * 50, dt)
-        
-    end
-    if direction.y < 0 then
-        direction.y = -1
-        move(false, true, -1 * 50, dt)
-    end
     
+    capthing(keycheck(x, y))
 
 end
 function love.keypressed(key)
