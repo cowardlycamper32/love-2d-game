@@ -18,7 +18,7 @@ function love.load()
         y = 50
     }
     ent.init()
-    ent.echo(position)
+    ent.echo(position.x .. (",") .. position.y)
 end
 function love.draw()
     love.graphics.rectangle("line", position.x, position.y, 200, 150)
@@ -52,46 +52,39 @@ function love.keypressed(key)
     end
     if key == "left" or key == "a" then
         direction.x = direction.x + -1
+        moving = true
     end
     if key == "right" or key == "d" then
         direction.x = direction.x + 1
+        moving = true
     end
     if key == "up" or key == "w" then
         direction.y = direction.y + -1
+        moving = true
     end
     if key == "down" or key == "s" then
         direction.y = direction.y + 1
+        moving = true
     end
-    print((tostring(direction.x) .. "," .. tostring(direction.y)))
+    ent.echo(tostring(direction.x) .. "," .. tostring(direction.y))
 
 end
 function love.keyreleased(key)
-    if key == "left" or key == "a" then
-        direction.x = direction.x - 1
-    end
-    if key == "right" or key == "d" then
-        direction.x = direction.x - -1
-    end
-    if key == "up" or key == "w" then
-        direction.y = direction.y - 1
-    end
-    if key == "down" or key == "s" then
-        direction.y = direction.y - -1
-    end
-    if not((key == "left" or key == "a") and (key == "right" or key == "d")) then
+    if (key == "left" or key == "a") and moving then
         direction.x = 0
     end
-
-    if not((key == "up" or key == "w") and (key == "down" or key == "s")) then
+    if (key == "right" or key == "d") and moving then
+        direction.x = 0
+    end
+    if (key == "up" or key == "w") and moving then
         direction.y = 0
     end
-    if (key == "left" or key == "a") and (key == "up" or key == "w") then
-        direction.x = -1
-        direction.y = 1
+    if (key == "down" or  key == "s") and moving then
+        direction.y = 0
     end
-    if (key == "left" or  key == "a") and (key == "down" or  key == "s") then
-        direction.x = -1
-        direction.y = -1
+    if direction.x == 0 and direction.y == 0 then
+        moving = false
+        
     end
 
     print(tostring(direction.x) .. "," .. tostring(direction.y))
