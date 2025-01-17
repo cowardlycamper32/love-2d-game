@@ -12,34 +12,51 @@ function move(x, y, speed, dt)
         position.y = position.y + speed * dt
     end
 end
+
+function vectnorm(xx, yy)
+    local length = math.sqrt(xx^2 + yy^2)
+    ent.warn(length)
+    if length > 0 then
+        xx = xx / length
+        yy = yy / length
+        ent.error(xx)
+        ent.error(yy)
+    end
+    return {
+        x = xx,
+        y = yy
+    }
+end
+
 function love.load()
     position = {
         x = 100,
         y = 50
     }
     ent.init()
-    ent.echo(position.x .. (",") .. position.y)
+    
+    --ent.echo(position.x .. (",") .. position.y)
 end
 function love.draw()
     love.graphics.rectangle("line", position.x, position.y, 200, 150)
 end
 function love.update(dt)
-    if direction.x >= 1 then
+    if direction.x > 0 then
         direction.x = 1
         move(true, false, 1 * 50, dt)
     end
 
-    if direction.x <= -1 then
+    if direction.x < 0 then
         direction.x = -1
         move(true, false, -1 * 50, dt)
     end
 
-    if direction.y >= 1 then
+    if direction.y > 0 then
         direction.y = 1
         move(false, true, 1 * 50, dt)
         
     end
-    if direction.y <= -1 then
+    if direction.y < 0 then
         direction.y = -1
         move(false, true, -1 * 50, dt)
     end
@@ -47,6 +64,7 @@ function love.update(dt)
 
 end
 function love.keypressed(key)
+    
     if key == "escape" then
         love.event.quit()
     end
@@ -66,7 +84,8 @@ function love.keypressed(key)
         direction.y = direction.y + 1
         moving = true
     end
-    ent.echo(tostring(direction.x) .. "," .. tostring(direction.y))
+    direction = vectnorm(direction.x, direction.y)
+    --ent.echo(tostring(direction.x) .. "," .. tostring(direction.y))
 
 end
 function love.keyreleased(key)
@@ -84,10 +103,10 @@ function love.keyreleased(key)
     end
     if direction.x == 0 and direction.y == 0 then
         moving = false
-        
     end
+    
 
-    print(tostring(direction.x) .. "," .. tostring(direction.y))
+    --ent.warn(tostring(direction.x) .. "," .. tostring(direction.y) .. "," .. tostring(moving))
 end
 function love.focus(f)
     if not f then
