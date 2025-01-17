@@ -3,10 +3,12 @@ direction = {
     x = 0,
     y = 0
 }
+moving = false
+
 function move(x, y, speed, dt)
     if x == true then
         position.x = position.x + speed * dt
-    elseif y then
+    elseif y == true then
         position.y = position.y + speed * dt
     end
 end
@@ -15,6 +17,8 @@ function love.load()
         x = 100,
         y = 50
     }
+    ent.init()
+    ent.echo(position)
 end
 function love.draw()
     love.graphics.rectangle("line", position.x, position.y, 200, 150)
@@ -23,16 +27,23 @@ function love.update(dt)
     if direction.x >= 1 then
         direction.x = 1
         move(true, false, 1 * 50, dt)
-    elseif direction.x <= -1 then
+    end
+
+    if direction.x <= -1 then
         direction.x = -1
         move(true, false, -1 * 50, dt)
-    elseif direction.y >= 1 then
+    end
+
+    if direction.y >= 1 then
         direction.y = 1
         move(false, true, 1 * 50, dt)
-    elseif direction.y <= -1 then
+        
+    end
+    if direction.y <= -1 then
         direction.y = -1
         move(false, true, -1 * 50, dt)
     end
+    
 
 end
 function love.keypressed(key)
@@ -41,11 +52,14 @@ function love.keypressed(key)
     end
     if key == "left" or key == "a" then
         direction.x = direction.x + -1
-    elseif key == "right" or key == "d" then
+    end
+    if key == "right" or key == "d" then
         direction.x = direction.x + 1
-    elseif key == "up" or key == "w" then
+    end
+    if key == "up" or key == "w" then
         direction.y = direction.y + -1
-    elseif key == "down" or key == "s" then
+    end
+    if key == "down" or key == "s" then
         direction.y = direction.y + 1
     end
     print((tostring(direction.x) .. "," .. tostring(direction.y)))
@@ -54,11 +68,14 @@ end
 function love.keyreleased(key)
     if key == "left" or key == "a" then
         direction.x = direction.x - 1
-    elseif key == "right" or key == "d" then
+    end
+    if key == "right" or key == "d" then
         direction.x = direction.x - -1
-    elseif key == "up" or key == "w" then
+    end
+    if key == "up" or key == "w" then
         direction.y = direction.y - 1
-    elseif key == "down" or key == "s" then
+    end
+    if key == "down" or key == "s" then
         direction.y = direction.y - -1
     end
     if not((key == "left" or key == "a") and (key == "right" or key == "d")) then
@@ -71,6 +88,10 @@ function love.keyreleased(key)
     if (key == "left" or key == "a") and (key == "up" or key == "w") then
         direction.x = -1
         direction.y = 1
+    end
+    if (key == "left" or  key == "a") and (key == "down" or  key == "s") then
+        direction.x = -1
+        direction.y = -1
     end
 
     print(tostring(direction.x) .. "," .. tostring(direction.y))
