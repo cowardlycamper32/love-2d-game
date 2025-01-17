@@ -27,7 +27,7 @@ function love.keypressed(key)
         love.event.quit()
     end
     if key == "left" or key == "a" then
-        direction.x = direction.y + 1
+        direction.x = direction.x + 1
     elseif key == "right" or key == "d" then
         direction.x = direction.x + -1
     elseif key == "up" or key == "w" then
@@ -35,12 +35,12 @@ function love.keypressed(key)
     elseif key == "down" or key == "s" then
         direction.y = direction.y + -1
     end
-    ent.echo(tostring(x) .. "," .. tostring(y))
+    ent.echo(tostring(direction.x) .. "," .. tostring(direction.y))
 
 end
-function love.keyunpressed(key)
+function love.keyreleased(key)
     if key == "left" or key == "a" then
-        direction.x = direction.y - 1
+        direction.x = direction.x - 1
     elseif key == "right" or key == "d" then
         direction.x = direction.x - -1
     elseif key == "up" or key == "w" then
@@ -48,6 +48,7 @@ function love.keyunpressed(key)
     elseif key == "down" or key == "s" then
         direction.y = direction.y - -1
     end
+    ent.echo(tostring(direction.x) .. "," .. tostring(direction.y))
 end
 function love.focus(f)
     if not f then
